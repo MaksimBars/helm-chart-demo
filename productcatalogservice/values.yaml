@@ -1,0 +1,20 @@
+name: productcatalogservice
+service:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 3550
+    tergetport: 3550
+serviceaccountname: default
+terminationgraceperiodseconds: 5
+containers:
+  name: server
+  image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.2.4
+  port: 3550
+  env:
+    value: '"3550"'
+  resources:
+      requestscpu: 100m
+      requestsmemory: 64Mi
+      limitscpu: 200m
+      limitsmemory: 128Mi

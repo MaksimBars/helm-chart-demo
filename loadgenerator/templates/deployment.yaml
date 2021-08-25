@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: {{ .Values.annotation }}
+    spec:
+      serviceAccountName: {{ .Values.serviceaccountname }}
+      terminationGracePeriodSeconds: {{ .Values.terminationgraceperiodseconds}}
+      restartPolicy: {{ .Values.restartpolicy }}
+      initContainers:
+      - command:
+        - /bin/sh
+        - -exc
+        - |
+          echo "Init container pinging frontend: ${FRONTEND_ADDR}..."
+          STATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print $2}')
+          if test $STATUSCODE -ne 200; then
+              echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
+              exit 1
+          fi
+        name: {{ .Values.spec.name }}
+        image: {{ .Values.spec.image }}
+        env:
+        - name: FRONTEND_ADDR
+          value: {{ .Values.spec.env.value }}
+      containers:
+      - name: {{ .Values.containers.name }}
+        image: {{ .Values.containers.image }}
+        env:
+        - name: FRONTEND_ADDR
+          value: {{ .Values.containers.env.frontvalue }}
+        - name: USERS
+          value: {{ .Values.containers.env.uservalue }}
+        resources:
+          requests:
+            cpu: {{ .Values.containers.resources.requestscpu}}
+            memory: {{ .Values.containers.resources.requestsmemory}}
+          limits:
+            cpu: {{ .Values.containers.resources.limitscpu}}
+            memory: {{ .Values.containers.resources.limitsmemory}}

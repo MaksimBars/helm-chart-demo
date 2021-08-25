@@ -1,0 +1,22 @@
+name: shippingservice
+service:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 50051
+    targetport: 50051
+serviceaccountname: default
+containers:
+  name: server
+  image: gcr.io/google-samples/microservices-demo/shippingservice:v0.2.4
+  ports:
+    containerport: 50051
+  env:
+    value: '"50051"'
+  readinessprobe:
+    periodseconds: 5
+  resources:
+    requestscpu: 100m
+    requestsmemory: 64Mi
+    limitscpu: 200m
+    limitsmemory: 128Mi

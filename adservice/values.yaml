@@ -1,0 +1,27 @@
+name: adservice
+service:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 9555
+    targetport: 9555
+spec:
+  serviceaccountname: default
+  terminationgraceperiodseconds: 5
+  containers:
+    name: server
+    image: gcr.io/google-samples/microservices-demo/adservice:v0.2.4
+    port: 9555
+    env:
+      value: '"9555"'
+    readinessprobe:
+      initialdelayseconds: 20
+      periodseconds: 5
+    livenessprobe:
+      initialdelayseconds: 20
+      periodseconds: 5
+    resources:
+      requestscpu: 100m
+      requestsmemory: 220Mi
+      limitscpu: 200m
+      limitsmemory: 450Mi

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      serviceAccountName: {{ .Values.spec.serviceaccountname }}
+      terminationGracePeriodSeconds: {{ .Values.spec.terminationgraceperiodseconds }}
+      containers:
+      - name: {{ .Values.spec.containers.name }}
+        image: {{ .Values.spec.containers.image }}
+        ports:
+        - containerPort: {{ .Values.spec.containers.port }}
+        env:
+        - name: PORT
+          value: {{ .Values.spec.containers.env.value }}
+        # - name: DISABLE_STATS
+        #   value: "1"
+        # - name: DISABLE_TRACING
+        #   value: "1"
+        # - name: JAEGER_SERVICE_ADDR
+        #   value: "jaeger-collector:14268"
+        resources:
+          requests:
+            cpu: {{ .Values.spec.containers.resources.requestscpu }}
+            memory: {{ .Values.spec.containers.resources.requestsmemory }}
+          limits:
+            cpu: {{ .Values.spec.containers.resources.limitscpu }}
+            memory: {{ .Values.spec.containers.resources.limitsmemory }}
+        readinessProbe:
+          initialDelaySeconds: {{ .Values.spec.containers.readinessprobe.initialdelayseconds }}
+          periodSeconds: {{ .Values.spec.containers.readinessprobe.periodseconds }}
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:9555"]
+        livenessProbe:
+          initialDelaySeconds: {{ .Values.spec.containers.livenessprobe.initialdelayseconds }}
+          periodSeconds: {{ .Values.spec.containers.livenessprobe.periodseconds }}
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:9555"]

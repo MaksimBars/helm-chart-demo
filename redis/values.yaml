@@ -1,0 +1,31 @@
+name: redis-cart
+service:
+  type: ClusterIP
+  ports:
+    name: redis
+    port: 6379
+    targetport: 6379
+containers:
+  name: redis
+  image: redis:alpine
+  ports:
+    containerport: 6379
+  readinessprobe:
+    periodseconds: 5
+    tcpsocket:
+      port: 6379
+  livenessprobe:
+    periodseconds: 5
+    tcpsocket:
+      port: 6379
+  volumemounts:
+    mountpath: /data
+    name: redis-data
+  resources:
+    requestscpu: 70m
+    requestsmemory: 200Mi
+    limitscpu: 125m
+    limitsmemory: 256Mi
+volumes:
+  name: redis-data
+  emptydir: "{}"

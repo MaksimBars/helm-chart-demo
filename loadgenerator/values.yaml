@@ -1,0 +1,22 @@
+name: loadgenerator
+replicas: 1
+annotation: '"true"'
+serviceaccountname: default
+terminationgraceperiodseconds: 5
+restartpolicy: Always
+spec:
+  name: frontend-check
+  image: busybox:latest
+  env:
+    value: '"frontend:80"'
+containers:
+  name: main
+  image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.2.4
+  env:
+    frontvalue: '"frontend:80"'
+    uservalue: '"10"'
+  resources:
+    requestscpu: 300m
+    requestsmemory: 256Mi
+    limitscpu: 500m
+    limitsmemory: 512Mi

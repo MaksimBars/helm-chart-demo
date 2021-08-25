@@ -1,0 +1,25 @@
+name: cartservice
+service:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 7070
+    tergetport: 7070
+serviceaccountname: default
+terminationgraceperiodseconds: 5
+containers:
+  name: server
+  image: gcr.io/google-samples/microservices-demo/cartservice:v0.2.4
+  port: 7070
+  env:
+    value: '"redis-cart:6379"'
+  resources:
+      requestscpu: 200m
+      requestsmemory: 64Mi
+      limitscpu: 300m
+      limitsmemory: 128Mi
+  readinessprobe:
+    delayseconds: 15
+  livenessprobe:
+    delayseconds: 15
+    periodseconds: 10

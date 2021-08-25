@@ -1,0 +1,20 @@
+name: paymentservice
+serviceaccountname: default
+terminationgraceperiodseconds: 5
+containers:
+  name: server
+  image: gcr.io/google-samples/microservices-demo/paymentservice:v0.2.4
+  containerport: 50051
+  env:
+    value: '"50051"'
+  resources:
+    requestscpu: 100m
+    requestsmemory: 64Mi
+    limitscpu: 200m
+    limitsmemory: 128Mi
+service:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 50051
+    targetport: 50051

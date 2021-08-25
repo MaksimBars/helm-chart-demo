@@ -1,0 +1,25 @@
+name: checkoutservice
+spec:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 5050
+    targetport: 5050
+  serviceaccountname: default
+  containers:
+    name: server
+    image: gcr.io/google-samples/microservices-demo/checkoutservice:v0.2.4
+    containerport: 5050
+    env:
+      port: '"5050"'
+      productcatalog: '"productcatalogservice:3550"'
+      shippingservice: '"shippingservice:50051"'
+      paymentservice: '"paymentservice:50051"'
+      emailservice: '"emailservice:5000"'
+      currencyservice: '"currencyservice:7000"'
+      cartservice: '"cartservice:7070"'
+    resources:
+      requestscpu: 100m
+      requestsmemory: 64Mi
+      limitscpu: 200m
+      limitsmemory: 128Mi

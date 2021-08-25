@@ -1,0 +1,25 @@
+name: recommendationservice
+spec:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 8080
+    targetport: 8080
+  serviceaccountname: default
+  terminationgraceperiodseconds: 5
+  containers:
+    name: server
+    image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.2.4
+    port: 8080
+    readinessprobe:
+      periodseconds: 5
+    livenessprobe:
+      periodseconds: 5
+    env:
+      portvalue: '"8080"'
+      productcatalogvalue: '"productcatalogservice:3550"'
+    resources:
+      requestscpu: 100m
+      requestsmemory: 220Mi
+      limitscpu: 200m
+      limitsmemory: 450Mi

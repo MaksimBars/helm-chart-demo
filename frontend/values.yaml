@@ -1,0 +1,50 @@
+name: frontend
+type: ClusterIP
+ports:
+  name: http
+  port: 80
+  targetport: 8080
+externalservice:
+  name: frontend-external
+  type: LoadBalancer
+  ports:
+    name: http
+    port: 80
+    targetport: 8080
+
+annotations: '"true"'
+serviceaccountname: default
+containers:
+  name: server
+  image: gcr.io/google-samples/microservices-demo/frontend:v0.2.4
+  containerport: 8080
+  readinessprobe:
+    delayseconds: 10
+    httpget:
+      path: "/_healthz"
+      port: 8080
+      httpheaders:
+        name: "Cookie"
+        value: "shop_session-id=x-readiness-probe"
+  livenessprobe:
+    delayseconds: 10
+    httpget:
+      path: "/_healthz"
+      port: 8080
+      httpheaders:
+        name: "Cookie"
+        value: "shop_session-id=x-liveness-probe"
+  env:
+    portvalue: '"8080"'
+    productcatalogservice: '"productcatalogservice:3550"'
+    currencyservice: '"currencyservice:7000"'
+    cartservice: '"cartservice:7070"'
+    recommendationservice: '"recommendationservice:8080"'
+    shippingservice: '"shippingservice:50051"'
+    checkoutservice: '"checkoutservice:5050"'
+    adservice: '"adservice:9555"'
+  resources:
+    requestscpu: 100m
+    requestsmemory: 64Mi
+    limitscpu: 200m
+    limitsmemory: 128Mi

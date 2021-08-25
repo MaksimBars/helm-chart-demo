@@ -1,0 +1,22 @@
+name: currencyservice
+service:
+  type: ClusterIP
+  ports:
+    name: grpc
+    port: 7000
+    targetport: 7000
+serviceaccountname: default
+terminationgraceperiodseconds: 5
+containers:
+  name: server
+  image: gcr.io/google-samples/microservices-demo/currencyservice:v0.2.4
+  ports:
+    name: grpc
+    containerport: 7000
+  env:
+    value: '"7000"'
+  resources:
+    requestscpu: 100m
+    requestsmemory: 64Mi
+    limitscpu: 200m
+    limitsmemory: 128Mi

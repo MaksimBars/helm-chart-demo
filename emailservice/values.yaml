@@ -1,0 +1,30 @@
+name: emailservice
+spec:
+  type: ClusterIP
+  selector:
+    app: emailservice
+  ports:
+    name: grpc
+    port: 5000
+    targetPort: 5000
+  serviceaccountname: default
+  terminationgraceperiod: 5
+  containers:
+    name: server
+    image: gcr.io/google-samples/microservices-demo/emailservice:v0.2.4
+    ports:
+      containerPort: 8080
+    env:
+      valuePort: '"8080"'
+      valueDisableProfiler: '"1"'
+    readinesprobe:
+      periodsecond: 20
+    livenessprobe:
+      periodsecond: 20
+    recources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi

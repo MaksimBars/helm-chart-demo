@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      serviceAccountName: {{ .Values.spec.serviceaccountname }}
+      terminationGracePeriodSeconds: {{ .Values.spec.terminationgraceperiod }}
+      containers:
+      - name: {{ .Values.spec.containers.name }}
+        image: {{ .Values.spec.containers.image }}
+        ports:
+        - containerPort: {{ .Values.spec.containers.ports.containerPort }}
+        env:
+        - name: PORT
+          value: {{ .Values.spec.containers.env.valuePort }}
+        # - name: DISABLE_TRACING
+        #   value: "1"
+        - name: DISABLE_PROFILER
+          value: {{ .Values.spec.containers.env.valueDisableProfiler }}
+        readinessProbe:
+          periodSeconds: {{ .Values.spec.containers.readinesprobe.periodsecond }}
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+        livenessProbe:
+          periodSeconds: {{ .Values.spec.containers.livenessprobe.periodsecond }}
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+        resources:
+          requests:
+            cpu: {{ .Values.spec.containers.recources.requests.cpu}}
+            memory: {{ .Values.spec.containers.recources.requests.memory}}
+          limits:
+            cpu: {{ .Values.spec.containers.recources.limits.cpu}}
+            memory: {{ .Values.spec.containers.recources.limits.memory}}
