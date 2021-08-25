@@ -10,7 +10,7 @@ spec:
     namespace: default
   project: default
   source:
-    path: apps/
+    path: app/
     repoURL: https://github.com/MaksimBars/helm-chart-demo.git
     targetRevision: HEAD
   syncPolicy:
