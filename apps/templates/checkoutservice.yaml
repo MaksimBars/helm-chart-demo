@@ -9,7 +9,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
-  project: microservicedemo
+  project: default
   source:
     path: checkoutservice/
     repoURL: https://github.com/MaksimBars/helm-chart-demo.git
