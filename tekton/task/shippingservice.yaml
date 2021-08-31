@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: shippingservice
+spec:
+  resources:
+    inputs:
+      - name: repo
+        type: git
+  steps:
+    - name: shippingservice
+      image: lachlanevenson/k8s-helm
+      workingDir: /workspace/repo
+      command: ["sh"]
+      args:
+        - -c
+        - 'helm install shippingservice ./shippingservice'

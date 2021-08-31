@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: emailservice
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+  - name: emailservice
+    taskRef:
+      name: emailservice
+    resources:
+        inputs:
+          - name: repo
+            resource: repo

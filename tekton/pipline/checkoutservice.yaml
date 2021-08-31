@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: checkoutservice
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+  - name: checkoutservice
+    taskRef:
+      name: checkoutservice
+    resources:
+        inputs:
+          - name: repo
+            resource: repo

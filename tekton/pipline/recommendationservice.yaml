@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: recommendationservice
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+  - name: recommendationservice
+    taskRef:
+      name: recommendationservice
+    resources:
+        inputs:
+          - name: repo
+            resource: repo

@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: shippingservice
+spec:
+  taskRef:
+    name: shippingservice
+  resources:
+    inputs:
+      - name: repo
+        resourceRef:
+          name: helm-chart-demo-resources

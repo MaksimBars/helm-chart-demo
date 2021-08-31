@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: loadgenerator
+spec:
+  resources:
+    inputs:
+      - name: repo
+        type: git
+  steps:
+    - name: loadgenerator
+      image: lachlanevenson/k8s-helm
+      workingDir: /workspace/repo
+      command: ["sh"]
+      args:
+        - -c
+        - 'helm install loadgenerator ./loadgenerator'

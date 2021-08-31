@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: redis
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+  - name: redis
+    taskRef:
+      name: redis
+    resources:
+        inputs:
+          - name: repo
+            resource: repo

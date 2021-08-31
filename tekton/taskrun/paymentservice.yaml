@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: paymentservice
+spec:
+  taskRef:
+    name: paymentservice
+  resources:
+    inputs:
+      - name: repo
+        resourceRef:
+          name: helm-chart-demo-resources

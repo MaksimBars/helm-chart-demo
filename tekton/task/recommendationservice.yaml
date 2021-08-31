@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: recommendationservice
+spec:
+  resources:
+    inputs:
+      - name: repo
+        type: git
+  steps:
+    - name: recommendationservice
+      image: lachlanevenson/k8s-helm
+      workingDir: /workspace/repo
+      command: ["sh"]
+      args:
+        - -c
+        - 'helm install recommendationservice ./recommendationservice'

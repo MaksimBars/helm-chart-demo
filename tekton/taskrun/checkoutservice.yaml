@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: checkoutservice
+spec:
+  taskRef:
+    name: checkoutservice
+  resources:
+    inputs:
+      - name: repo
+        resourceRef:
+          name: helm-chart-demo-resources
