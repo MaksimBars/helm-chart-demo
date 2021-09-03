@@ -13,8 +13,10 @@ spec:
       default: https://github.com/MaksimBars/helm-chart-demo
     - name: gitrepositoryname
       description: The repository name
+      default: helm-chart-demo
     - name: repository
       description: The repository full name
+      default: MaksimBars/helm-chart-demo
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
