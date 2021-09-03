@@ -6,6 +6,6 @@ spec:
   type: git
   params:
     - name: url
-      value: https://github.com/MaksimBars/helm-chart-demo
+      value: https://github.com/maksimbars/helm-chart-demo
     - name: revision
       value: main
