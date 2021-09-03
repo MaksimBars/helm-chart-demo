@@ -10,6 +10,7 @@ spec:
       default: main
     - name: gitrepositoryurl
       description: The git repository url
+      default: https://github.com/MaksimBars/helm-chart-demo
     - name: gitrepositoryname
       description: The repository name
     - name: repository
