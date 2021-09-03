@@ -1,0 +1,11 @@
+----tekton pipeline----
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+kubectl get pv
+kubectl get storageclasses
+kubectl create configmap config-artifact-pvc --from-literal=size=10Gi --from-literal=storageClassName=manual -o yaml -n tekton-pipelines --dry-run=client | kubectl replace -f -
+-----dashboard-----
+kubectl apply --filename https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
+kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
+-----triger------
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/release.yaml
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/interceptors.yaml

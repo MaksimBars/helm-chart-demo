@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: frontend
+spec:
+  pipelineRef:
+    name: frontend
+  resources:
+    - name: repo
+      resourceRef:
+        name: helm-chart-demo-resources
+
+  serviceAccountName: pipeline-account

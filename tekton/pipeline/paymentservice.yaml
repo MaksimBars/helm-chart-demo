@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: paymentservice
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+  - name: paymentservice
+    taskRef:
+      name: paymentservice
+    resources:
+        inputs:
+          - name: repo
+            resource: repo

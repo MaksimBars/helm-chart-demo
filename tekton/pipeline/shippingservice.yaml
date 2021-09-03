@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: shippingservice
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+  - name: shippingservice
+    taskRef:
+      name: shippingservice
+    resources:
+        inputs:
+          - name: repo
+            resource: repo

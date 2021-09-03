@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: adservice
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+  - name: adservice
+    taskRef:
+      name: adservice
+    resources:
+        inputs:
+          - name: repo
+            resource: repo
