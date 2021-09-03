@@ -46,4 +46,4 @@ spec:
               type: image
               params:
               - name: url
-                value: example.com/$(tt.params.repository)
+                value: example.com/harbur/tekton-tutorial
